@@ -1,8 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
+import "../styles/navbar/navbar.css";
 
 export const Layout = () => {
   return (
-    <div className="app">
+    <>
       <nav className="navbar">
         <ul>
           <li>
@@ -26,6 +27,6 @@ export const Layout = () => {
       <main>
         <Outlet />
       </main>
-    </div>
+    </>
   );
 };
