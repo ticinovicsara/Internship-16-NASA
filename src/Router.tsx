@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Layout } from "./components";
 import {
-  HomePage,
-  ApodPage,
-  MarsRoverPage,
-  NEOTrackerPage,
   EarthImageryPage,
+  HomePage,
+  NEOTrackerPage,
   NotFoundPage,
-} from "./pages/index";
+} from "./pages";
+import MarsRoverPage from "./pages/MarsRoverPage";
+import ApodPage from "./pages/ApodPage";
 
 const AppRouter = () => {
   return (

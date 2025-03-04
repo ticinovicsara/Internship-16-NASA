@@ -1,7 +1,32 @@
-export const ApodPage = () => {
+import { useState } from "react";
+import useFetchAPOD from "../hooks/useFetchAPOD";
+import { APOD } from "../types/apod";
+
+const ApodPage: React.FC = () => {
+  const [count, setCount] = useState<number>(10);
+  const { data, loading, error } = useFetchAPOD(count);
+
   return (
-    <div>
-      <h1>Apod</h1>
+    <div className="apod-page">
+      <h1>APOD - Astronomy Picture of the Day</h1>
+
+      {error && <p className="error">{error}</p>}
+
+      <div className="apod-gallery">
+        {data.map((item: APOD, index: number) => (
+          <div key={index} className="apod-item">
+            <img src={item.url} alt={item.title} />
+            <h3>{item.title}</h3>
+            <p>{item.date}</p>
+          </div>
+        ))}
+      </div>
+
+      {loading && <p>Ucitavanje...</p>}
+
+      <button onClick={() => setCount(count + 10)}>Ucitaj više</button>
     </div>
   );
 };
+
+export default ApodPage;
