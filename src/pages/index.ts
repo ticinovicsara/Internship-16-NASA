@@ -1,6 +1,6 @@
 export * from "./HomePage";
 export * from "./ApodPage";
 export * from "./MarsRoverPage";
-export * from "./NEOtrackerPage";
+export * from "./NEOTrackerPage";
 export * from "./EarthImageryPage";
 export * from "./NotFoundPage";

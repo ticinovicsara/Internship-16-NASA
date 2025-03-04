@@ -1,6 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
 import "../styles/navbar/navbar.css";
-import ToggleSwitch from "./ToggleSwitch";
 
 export const Layout = () => {
   return (

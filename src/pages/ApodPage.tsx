@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useFetchAPOD from "../hooks/useFetchAPOD";
 import { APOD } from "../types/apod";
+import { Link } from "react-router-dom";
 
 const ApodPage: React.FC = () => {
   const [count, setCount] = useState<number>(10);
@@ -15,7 +16,9 @@ const ApodPage: React.FC = () => {
       <div className="apod-gallery">
         {data.map((item: APOD, index: number) => (
           <div key={index} className="apod-item">
-            <img src={item.url} alt={item.title} />
+            <Link to={`/details/apod/${item.date}`}>
+              <img src={item.url} alt={item.title} />
+            </Link>
             <h3>{item.title}</h3>
             <p>{item.date}</p>
           </div>

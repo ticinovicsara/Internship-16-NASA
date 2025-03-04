@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const NEOTrackerPage: React.FC = () => {
+const NEOTracker: React.FC = () => {
   const [startDate, setStartDate] = useState<string>("2025-03-01");
   const [endDate, setEndDate] = useState<string>("2025-03-07");
 
@@ -71,4 +71,4 @@ const NEOTrackerPage: React.FC = () => {
   );
 };
 
-export default NEOTrackerPage;
+export default NEOTracker;

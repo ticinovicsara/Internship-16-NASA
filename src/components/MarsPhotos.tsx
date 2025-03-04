@@ -2,34 +2,36 @@ import { useState } from "react";
 import useFetchMars from "../hooks/useFetchMars";
 import { Link } from "react-router-dom";
 
-const MarsRoverPage: React.FC = () => {
-  const [rover, setRover] = useState<string>("curiosity");
-  const [camera, setCamera] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
+const MarsPhotos = () => {
+  const [rover, setRover] = useState("curiosity");
+  const [camera, setCamera] = useState("");
+  const [page, setPage] = useState(1);
 
   const { data, loading, error } = useFetchMars(rover, camera, page);
 
   return (
-    <div className="mars-rover-page">
+    <div>
       <h1>Mars Rover Photos</h1>
 
-      <div className="filters">
-        <label>Odaberi Rover:</label>
-        <select onChange={(e) => setRover(e.target.value)} value={rover}>
+      {/* Filtriranje */}
+      <div>
+        <label>Rover: </label>
+        <select value={rover} onChange={(e) => setRover(e.target.value)}>
           <option value="curiosity">Curiosity</option>
           <option value="opportunity">Opportunity</option>
           <option value="spirit">Spirit</option>
         </select>
 
-        <label>Odaberi Kameru:</label>
-        <select onChange={(e) => setCamera(e.target.value)} value={camera}>
-          <option value="">Sve kamere</option>
+        <label>Kamera: </label>
+        <select value={camera} onChange={(e) => setCamera(e.target.value)}>
+          <option value="">Sve</option>
           <option value="FHAZ">Front Hazard Avoidance Camera</option>
           <option value="RHAZ">Rear Hazard Avoidance Camera</option>
-          <option value="NAVCAM">Navigation Camera</option>
+          <option value="MAST">Mast Camera</option>
         </select>
       </div>
 
+      {/* Prikaz slika */}
       {loading && <p>Učitavanje...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -41,7 +43,8 @@ const MarsRoverPage: React.FC = () => {
         ))}
       </div>
 
-      <div className="pagination">
+      {/* Paginacija */}
+      <div>
         <button disabled={page === 1} onClick={() => setPage(page - 1)}>
           Prethodna
         </button>
@@ -52,4 +55,4 @@ const MarsRoverPage: React.FC = () => {
   );
 };
 
-export default MarsRoverPage;
+export default MarsPhotos;
