@@ -17,7 +17,7 @@ const RotatingPlanet = () => {
 
   return (
     <mesh ref={planetRef} rotation={[0.4, 0.3, 0.1]}>
-      <sphereGeometry args={[2, 64, 64]} />
+      <sphereGeometry args={[6, 64, 64]} />
       <meshStandardMaterial map={texture} />
     </mesh>
   );
@@ -26,10 +26,10 @@ const RotatingPlanet = () => {
 const PlanetAnimation = () => {
   return (
     <div className="planet">
-      <Canvas camera={{ position: [0, 0, 7], fov: 50 }}>
+      <Canvas orthographic camera={{ position: [0, 0, 7], zoom: 50 }}>
         <ambientLight intensity={2} />
         <pointLight position={[5, 5, 5]} />
-        <OrbitControls />
+        <OrbitControls enableZoom={false} />
         <RotatingPlanet />
       </Canvas>
     </div>

@@ -1,14 +1,20 @@
 .homepage {
   width: 100%;
+  height: 160vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  background-color: transparent;
+  z-index: 10;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .title {
   font-size: 3rem;
   margin-bottom: 10px;
+  margin-top: -500px;
 }
 
 .description {
@@ -17,12 +23,20 @@
 }
 
 .light-mode {
-  background-color: white;
+  background: url(/light-theme.avif);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
   color: black;
 }
 
 .dark-mode {
-  background-color: #333;
+  background: url(/stars.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
   color: white;
 }
 
@@ -33,9 +47,41 @@ button {
   background-color: #007bff;
   color: white;
   font-size: 16px;
-  z-index: 10;
+  margin-bottom: 100px;
+  z-index: 100;
 }
 
 button:hover {
   background-color: #0056b3;
+}
+
+.theme-image-container {
+  position: absolute;
+  right: -100px;
+  top: -80px;
+  scale: 0.5;
+  rotate: 10deg;
+  animation: moveUpDown 6s ease infinite;
+}
+
+@keyframes moveUpDown {
+  0% {
+    top: -80px;
+  }
+  50% {
+    top: -60px;
+  }
+  100% {
+    top: -80px;
+  }
+}
+
+.light-mode .theme-image-container {
+  top: -70px;
+  right: -100px;
+}
+
+.dark-mode .theme-image-container {
+  top: -150px;
+  right: -50px;
 }
