@@ -1,10 +1,13 @@
+import { LoadingProvider } from "./contexts/LoadingContext";
 import ThemeProvider from "./contexts/ThemeContext";
 import AppRouter from "./Router";
 
 function App() {
   return (
     <ThemeProvider>
-      <AppRouter />
+      <LoadingProvider>
+        <AppRouter />
+      </LoadingProvider>
     </ThemeProvider>
   );
 }

@@ -14,7 +14,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="apod" element={<ApodPage />} />
+          <Route path="apod" element={<ApodPage loading={false} />} />
           <Route path="mars" element={<MarsRoverPage />} />
           <Route path="neo" element={<NEOTrackerPage />} />
           <Route path="earth" element={<EarthImageryPage />} />

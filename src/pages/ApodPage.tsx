@@ -4,10 +4,11 @@ import { APOD } from "../types/apod";
 import { Link } from "react-router-dom";
 import "../styles/apod/apod.css";
 import "../index.css";
+import withLoader from "../hoc/withLoader";
 
 const ApodPage: React.FC = () => {
   const [count, setCount] = useState<number>(10);
-  const { data, loading, error } = useFetchAPOD(count);
+  const { data, error } = useFetchAPOD(count);
 
   return (
     <div className="apod-page">
@@ -27,13 +28,11 @@ const ApodPage: React.FC = () => {
         ))}
       </div>
 
-      {loading && <p>Ucitavanje...</p>}
-
       <button className="button" onClick={() => setCount(count + 10)}>
-        Ucitaj više
+        Učitaj više
       </button>
     </div>
   );
 };
 
-export default ApodPage;
+export default withLoader(ApodPage);
