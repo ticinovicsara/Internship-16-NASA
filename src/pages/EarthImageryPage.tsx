@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import LeafletMap from "../components/LeafletMap";
 import useFetchEarthImage from "../hooks/useFetchEarthImage";
 import { Link } from "react-router-dom";
+import "../styles/earth/earth.css";
 
 interface SavedLocation {
   lat: number;
@@ -30,9 +31,9 @@ const EarthImageryPage = () => {
   };
 
   return (
-    <div>
-      <h1>Earth Imagery</h1>
-      <p>Odaberite lokaciju klikom na mapu</p>
+    <div className="earth-page">
+      <h1 className="page-title">Earth Imagery</h1>
+      <p className="earth-paragraph">Odaberite lokaciju klikom na mapu</p>
 
       <LeafletMap
         onLocationSelect={(latitude, longitude) => {
@@ -45,24 +46,30 @@ const EarthImageryPage = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {image && (
-        <div>
-          <h2>NASA Satelitska Slika</h2>
+        <div className="earth-image">
+          <h1 className="satelite-title">NASA Satelitska Slika</h1>
           <Link to={`/details/earth/${image.date}?lat=${lat}&lon=${lon}`}>
-            <img src={image.url} alt="Satelitska slika" />
+            <img
+              src={image.url}
+              alt="Satelitska slika"
+              className="satelite-image"
+            />
           </Link>
-          <p>
+          <p className="earth-paragraph">
             <strong>Datum snimanja:</strong> {image.date}
           </p>
-          <button onClick={saveLocation}>Spremi lokaciju</button>
+          <button className="button" onClick={saveLocation}>
+            Spremi lokaciju
+          </button>
         </div>
       )}
 
       {favorites.length > 0 && (
-        <div>
+        <div className="earth-fav-locations">
           <h2>Omiljene Lokacije</h2>
-          <ul>
+          <ul className="earth-fav-list">
             {favorites.map((fav, index) => (
-              <li key={index}>
+              <li key={index} className="earth-fav-item">
                 Lat: {fav.lat}, Lon: {fav.lon}
               </li>
             ))}
