@@ -3,3 +3,40 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.page-title {
+  font-family: Venite Adoremus;
+  padding: 30px;
+  margin-bottom: 30px;
+  font-size: 3em;
+}
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #845ec2;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 100px;
+  margin-top: 20px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  z-index: 100;
+}
+
+button:hover {
+  background-color: #503976;
+}
+
+@font-face {
+  font-family: "Venite Adoremus";
+  src: url(./assets/fonts/venite-adoremus-font/VeniteAdoremus-rgRBA.ttf);
+}
+
+@font-face {
+  font-family: "Venite Adoremus Straight";
+  src: url(./assets/fonts/venite-adoremus-font/VeniteAdoremusStraight-Yzo6v.ttf);
+}

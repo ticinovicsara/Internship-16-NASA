@@ -1,20 +1,20 @@
-import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
+import withTheme from "../hoc/withTheme";
 
-const ToggleSwitch = () => {
-  const themeContext = useContext(ThemeContext);
+interface ToggleSwitchProps {
+  themeContext: {
+    isDarkMode: boolean;
+    toggleTheme: () => void;
+  };
+}
 
-  if (!themeContext) {
-    return null;
-  }
-
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ themeContext }) => {
   const { isDarkMode, toggleTheme } = themeContext;
 
   return (
-    <button onClick={toggleTheme}>
+    <button className="button" onClick={toggleTheme}>
       {isDarkMode ? "Light Mode" : "Dark Mode"}
     </button>
   );
 };
 
-export default ToggleSwitch;
+export default withTheme(ToggleSwitch);

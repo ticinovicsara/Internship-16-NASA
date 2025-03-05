@@ -7,7 +7,13 @@ import { Cards } from "../components/Cards";
 
 export const HomePage = () => {
   const themeContext = useContext(ThemeContext);
-  if (!themeContext) return null;
+
+  if (!themeContext) {
+    console.error(
+      "ThemeContext nije dostupan u HomePage. Proveri da li je ThemeProvider ispravno postavljen."
+    );
+    return <p>Greška: Tema nije učitana.</p>;
+  }
 
   const { isDarkMode } = themeContext;
 
@@ -30,7 +36,14 @@ export const HomePage = () => {
 
         <PlanetAnimation />
         <div className="dark-mode-toggle">
-          <ToggleSwitch />
+          <ToggleSwitch
+            themeContext={{
+              isDarkMode: false,
+              toggleTheme: function (): void {
+                throw new Error("Function not implemented.");
+              },
+            }}
+          />
         </div>
 
         <div className="cards-section">

@@ -9,6 +9,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Link } from "react-router-dom";
+import "../styles/neo/neo.css";
 
 const NEOTrackerPage: React.FC = () => {
   const [startDate, setStartDate] = useState<string>("2025-03-01");
@@ -17,10 +19,10 @@ const NEOTrackerPage: React.FC = () => {
   const { data, loading, error } = useFetchNEO(startDate, endDate);
 
   return (
-    <div>
-      <h1>Near Earth Objects (NEO) Tracker</h1>
+    <div className="neo-tracker-page">
+      <h1 className="page-title">Near Earth Objects (NEO) Tracker</h1>
 
-      <div>
+      <div className="filters">
         <label>Početni datum:</label>
         <input
           type="date"
@@ -40,10 +42,12 @@ const NEOTrackerPage: React.FC = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <h2>Lista NEO objekata</h2>
-      <ul>
+      <ul className="neo-list">
         {data.map((neo) => (
           <li key={neo.id}>
-            <strong>{neo.name}</strong> -{" "}
+            <Link to={`/details/neo/${neo.id}`}>
+              <strong>{neo.name}</strong>
+            </Link>
             {neo.estimated_diameter.kilometers.estimated_diameter_max.toFixed(
               2
             )}{" "}
@@ -53,20 +57,23 @@ const NEOTrackerPage: React.FC = () => {
       </ul>
 
       <h2>Grafikon: Maksimalni prečnik objekata</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart
-          data={data.map((neo) => ({
-            name: neo.name,
-            diameter: neo.estimated_diameter.kilometers.estimated_diameter_max,
-          }))}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" hide />
-          <YAxis />
-          <Tooltip />
-          <Line type="monotone" dataKey="diameter" stroke="#8884d8" />
-        </LineChart>
-      </ResponsiveContainer>
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart
+            data={data.map((neo) => ({
+              name: neo.name,
+              diameter:
+                neo.estimated_diameter.kilometers.estimated_diameter_max,
+            }))}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" hide />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="diameter" stroke="#8884d8" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

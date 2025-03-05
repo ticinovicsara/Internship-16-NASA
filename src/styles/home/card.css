@@ -1,6 +1,5 @@
 .cards-section {
-  margin-bottom: -700px;
-  margin-top: 100px;
+  margin-bottom: -600px;
   width: 100%;
   padding: 30px;
   display: flex;
@@ -12,7 +11,7 @@
   width: 50%;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dvije kartice u svakom redu */
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -20,7 +19,7 @@
   width: auto;
   height: 220px;
   padding: 15px;
-  background-color: #f5f5f5;
+  background-color: #296073;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -39,14 +38,15 @@
 
 .card p {
   font-size: 1rem;
-  color: #555;
+  color: #d0d0d0;
   margin-bottom: 20px;
 }
 
 .card-link {
   font-size: 1rem;
-  color: #007bff;
+  color: #9369d8;
   text-decoration: none;
+  font-family: Venite Adoremus;
 }
 
 .card-link:hover {

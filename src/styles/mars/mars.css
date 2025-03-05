@@ -1,0 +1,56 @@
+.mars-rover-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
+  font-family: monospace;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 50px;
+}
+
+.filters label {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+}
+
+.filters select {
+  padding: 7px;
+  border-radius: 20px;
+  border: 1px solid #2f2146;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.mars-rover-page div[style] {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.mars-rover-page img {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mars-rover-page img:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

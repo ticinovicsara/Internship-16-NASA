@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useFetchMars from "../hooks/useFetchMars";
 import { Link } from "react-router-dom";
+import "../styles/mars/mars.css";
 
 const MarsRoverPage: React.FC = () => {
   const [rover, setRover] = useState<string>("curiosity");
@@ -11,7 +12,7 @@ const MarsRoverPage: React.FC = () => {
 
   return (
     <div className="mars-rover-page">
-      <h1>Mars Rover Photos</h1>
+      <h1 className="page-title">Mars Rover Photos</h1>
 
       <div className="filters">
         <label>Odaberi Rover:</label>
@@ -42,11 +43,17 @@ const MarsRoverPage: React.FC = () => {
       </div>
 
       <div className="pagination">
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+        <button
+          className="button"
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+        >
           Prethodna
         </button>
         <span> Stranica {page} </span>
-        <button onClick={() => setPage(page + 1)}>Sljedeća</button>
+        <button className="button" onClick={() => setPage(page + 1)}>
+          Sljedeća
+        </button>
       </div>
     </div>
   );
