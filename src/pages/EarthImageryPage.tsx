@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import LeafletMap from "../components/LeafletMap";
-import useFetchEarthImage from "../hooks/useFetchEarthImage";
-import { Link } from "react-router-dom";
+import useFetchEarthImage from "../hooks/useFetchEarthImagery";
+import { withLoader } from "../hoc/withLoader";
+import EarthImageryGallery from "../components/galeries/EarthImageryGallery";
 import "../styles/earth/earth.css";
 
 interface SavedLocation {
@@ -9,10 +10,14 @@ interface SavedLocation {
   lon: number;
 }
 
+const EarthImageryWithLoading = withLoader(
+  EarthImageryGallery,
+  useFetchEarthImage
+);
+
 const EarthImageryPage = () => {
   const [lat, setLat] = useState<number | null>(null);
   const [lon, setLon] = useState<number | null>(null);
-  const { image, loading, error } = useFetchEarthImage(lat, lon);
   const [favorites, setFavorites] = useState<SavedLocation[]>([]);
 
   useEffect(() => {
@@ -42,39 +47,17 @@ const EarthImageryPage = () => {
         }}
       />
 
-      {loading && <p>Učitavanje slike...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {image && (
-        <div className="earth-image">
-          <h1 className="satelite-title">NASA Satelitska Slika</h1>
-          <Link to={`/details/earth/${image.date}?lat=${lat}&lon=${lon}`}>
-            <img
-              src={image.url}
-              alt="Satelitska slika"
-              className="satelite-image"
-            />
-          </Link>
-          <p className="earth-paragraph">
-            <strong>Datum snimanja:</strong> {image.date}
-          </p>
-          <button className="button" onClick={saveLocation}>
-            Spremi lokaciju
-          </button>
-        </div>
-      )}
-
-      {favorites.length > 0 && (
-        <div className="earth-fav-locations">
-          <h2>Omiljene Lokacije</h2>
-          <ul className="earth-fav-list">
-            {favorites.map((fav, index) => (
-              <li key={index} className="earth-fav-item">
-                Lat: {fav.lat}, Lon: {fav.lon}
-              </li>
-            ))}
-          </ul>
-        </div>
+      {lat !== null && lon !== null && (
+        <EarthImageryWithLoading
+          params={{ lat, lon }}
+          loadingData={null}
+          additionalProps={{
+            lat,
+            lon,
+            saveLocation,
+            favorites,
+          }}
+        />
       )}
     </div>
   );

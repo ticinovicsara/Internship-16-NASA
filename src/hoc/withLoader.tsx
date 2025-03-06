@@ -4,7 +4,7 @@ import Loader from "../components/Loader";
 
 type FetchDataFunction<T> = (...args: any[]) => Promise<T>;
 
-export function withLoader<T, P extends { params: any; loadingData?: T }>(
+export function withLoader<T, P extends { params: any }>(
   WrappedComponent: React.ComponentType<P & { loadingData: T }>,
   fetchData: FetchDataFunction<T>
 ) {
