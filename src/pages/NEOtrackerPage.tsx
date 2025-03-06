@@ -1,5 +1,5 @@
-import { useState } from "react";
-import useFetchNEO from "../hooks/useFetchNEO";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   LineChart,
   Line,
@@ -9,14 +9,57 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Link } from "react-router-dom";
 import "../styles/neo/neo.css";
+import { withLoader } from "../hoc/withLoader";
+import { fetchNEOData } from "../services/fetchNEOData";
+
+const NEOTrackerGallery: React.FC<{ loadingData: any[] }> = ({
+  loadingData,
+}) => {
+  return (
+    <div className="neo-tracker-page">
+      <h2>Lista NEO objekata</h2>
+      <ul className="neo-list">
+        {loadingData.map((neo) => (
+          <li key={neo.id}>
+            <Link to={`/details/neo/${neo.id}`}>
+              <strong>{neo.name}</strong>
+            </Link>
+            {neo.estimated_diameter.kilometers.estimated_diameter_max.toFixed(
+              2
+            )}{" "}
+            km
+          </li>
+        ))}
+      </ul>
+
+      <h2>Grafikon: Maksimalni prečnik objekata</h2>
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart
+            data={loadingData.map((neo) => ({
+              name: neo.name,
+              diameter:
+                neo.estimated_diameter.kilometers.estimated_diameter_max,
+            }))}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" hide />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="diameter" stroke="#8884d8" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
+
+const NEOTrackerWithLoading = withLoader(NEOTrackerGallery, fetchNEOData);
 
 const NEOTrackerPage: React.FC = () => {
   const [startDate, setStartDate] = useState<string>("2025-03-01");
   const [endDate, setEndDate] = useState<string>("2025-03-07");
-
-  const { data, loading, error } = useFetchNEO(startDate, endDate);
 
   return (
     <div className="neo-tracker-page">
@@ -38,42 +81,7 @@ const NEOTrackerPage: React.FC = () => {
         />
       </div>
 
-      {loading && <p>Učitavanje...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <h2>Lista NEO objekata</h2>
-      <ul className="neo-list">
-        {data.map((neo) => (
-          <li key={neo.id}>
-            <Link to={`/details/neo/${neo.id}`}>
-              <strong>{neo.name}</strong>
-            </Link>
-            {neo.estimated_diameter.kilometers.estimated_diameter_max.toFixed(
-              2
-            )}{" "}
-            km
-          </li>
-        ))}
-      </ul>
-
-      <h2>Grafikon: Maksimalni prečnik objekata</h2>
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart
-            data={data.map((neo) => ({
-              name: neo.name,
-              diameter:
-                neo.estimated_diameter.kilometers.estimated_diameter_max,
-            }))}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" hide />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="diameter" stroke="#8884d8" />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <NEOTrackerWithLoading params={{ startDate, endDate }} />
     </div>
   );
 };

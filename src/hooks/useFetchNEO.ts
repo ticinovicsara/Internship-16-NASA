@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { NEO, NEOApiResponse } from "../types/neo";
+import { fetchNEOData } from "../services/fetchNEOData";
+import { NEO } from "../types/neo";
 
 const useFetchNEO = (startDate: string, endDate: string) => {
   const [data, setData] = useState<NEO[]>([]);
@@ -7,26 +8,20 @@ const useFetchNEO = (startDate: string, endDate: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadNEOData = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const API_KEY = import.meta.env.VITE_NASA_API_KEY;
-        const response = await fetch(
-          `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${API_KEY}`
-        );
-
-        if (!response.ok) throw new Error(`API error: ${response.status}`);
-
-        const result: NEOApiResponse = await response.json();
-        const neoArray: NEO[] = Object.values(result.near_earth_objects).flat();
-        setData(neoArray);
+        const result = await fetchNEOData({ startDate, endDate });
+        setData(result);
       } catch (err: any) {
-        setError(err.message || "Greška pri dohvatanju podataka.");
+        setError(err.message || "Failed to load data");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    loadNEOData();
   }, [startDate, endDate]);
 
   return { data, loading, error };

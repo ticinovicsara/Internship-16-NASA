@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { MarsPhoto } from "../types/mars";
 import { fetchMarsData } from "../services/fetchMarsData";
 
-// Accept an object containing rover, camera, and page
 const useFetchMars = ({
   rover,
   camera,
@@ -21,7 +20,6 @@ const useFetchMars = ({
       setLoading(true);
       setError(null);
       try {
-        // Fetch photos with the provided parameters
         const photos = await fetchMarsData({ rover, camera, page });
         setData(photos);
       } catch (err: any) {

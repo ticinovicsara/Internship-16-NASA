@@ -53,14 +53,14 @@ const MarsRoverPage: React.FC = () => {
 
       <div className="pagination">
         <button
-          className="button"
+          className="button mars-btn"
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
         >
           Prethodna
         </button>
         <span> Stranica {page} </span>
-        <button className="button" onClick={() => setPage(page + 1)}>
+        <button className="button mars-btn" onClick={() => setPage(page + 1)}>
           Sljedeća
         </button>
       </div>
