@@ -1,3 +1,4 @@
+import { Loader } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -40,7 +41,7 @@ const PhotoDetails = () => {
           const data = await response.json();
           foundPhoto = data.photos.find((p: MarsPhoto) => p.id === Number(id));
 
-          if (foundPhoto) break; // Ako nađemo sliku, prekidamo petlju
+          if (foundPhoto) break;
         }
 
         if (!foundPhoto) throw new Error("Slika nije pronađena.");
@@ -58,25 +59,25 @@ const PhotoDetails = () => {
     fetchPhoto();
   }, [id]);
 
-  if (loading) return <p>Učitavanje...</p>;
+  if (loading) return <Loader />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return photo ? (
     <div>
-      <h1>Detalji slike</h1>
+      <h1>Image details</h1>
       <img src={photo.img_src} alt="Mars" width="500" />
       <p>
         <strong>Rover:</strong> {photo.rover.name}
       </p>
       <p>
-        <strong>Kamera:</strong> {photo.camera.full_name}
+        <strong>Camera:</strong> {photo.camera.full_name}
       </p>
       <p>
-        <strong>Datum:</strong> {photo.earth_date}
+        <strong>Date:</strong> {photo.earth_date}
       </p>
     </div>
   ) : (
-    <p>Slika nije pronađena.</p>
+    <p>No picture found.</p>
   );
 };
 

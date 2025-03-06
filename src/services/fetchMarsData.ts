@@ -13,8 +13,6 @@ export const fetchMarsData = async ({
 
   if (camera) url += `&camera=${camera}`;
 
-  console.log("Fetching:", url);
-
   const response = await fetch(url);
   if (!response.ok) throw new Error(`API error: ${response.status}`);
 

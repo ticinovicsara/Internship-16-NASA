@@ -1,23 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import "../styles/mars/mars.css";
-import { MarsPhoto } from "../types/mars";
 import { fetchMarsData } from "../services/fetchMarsData";
 import { withLoader } from "../hoc/withLoader";
-
-const MarsRoverGallery: React.FC<{ loadingData: MarsPhoto[] }> = ({
-  loadingData,
-}) => {
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
-      {loadingData.map((photo) => (
-        <Link key={photo.id} to={`/photo/${photo.id}`}>
-          <img src={photo.img_src} alt="Mars" width="200" height="200" />
-        </Link>
-      ))}
-    </div>
-  );
-};
+import { MarsRoverGallery } from "../components/galeries/MarsRoverGallery";
 
 const MarsRoverWithLoading = withLoader(MarsRoverGallery, fetchMarsData);
 
