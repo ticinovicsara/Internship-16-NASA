@@ -1,0 +1,25 @@
+.details-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.details-page img {
+  width: 50%;
+  margin-bottom: 50px;
+  background-color: #5c4989;
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.details-page p {
+  background-color: #4b4453;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 90%;
+}

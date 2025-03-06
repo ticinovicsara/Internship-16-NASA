@@ -1,5 +1,7 @@
+import { Loader } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "../styles/details/details.css";
 
 const DetailPage = () => {
   const { type, id } = useParams();
@@ -32,7 +34,6 @@ const DetailPage = () => {
           throw new Error("Greška prilikom dohvaćanja podataka.");
         const result = await response.json();
 
-        // Za Mars Rover filtriramo sliku po ID-ju
         if (type === "mars-rover") {
           const foundPhoto = result.photos.find(
             (p: any) => p.id === Number(id)
@@ -52,14 +53,14 @@ const DetailPage = () => {
     fetchData();
   }, [type, id]);
 
-  if (loading) return <p>Učitavanje...</p>;
+  if (loading) return <Loader />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
+    <div className="details-page">
       {type === "apod" && data && (
         <>
-          <h1>{data.title}</h1>
+          <h1 className="page-title">{data.title}</h1>
           <img src={data.url} alt={data.title} width="100%" />
           <p>{data.explanation}</p>
         </>
@@ -67,33 +68,38 @@ const DetailPage = () => {
 
       {type === "mars-rover" && data && (
         <>
-          <h1>Mars Rover Slika</h1>
+          <h1 className="page-title">Mars Rover Image</h1>
           <img src={data.img_src} alt="Mars" width="100%" />
           <p>
             <strong>Rover:</strong> {data.rover.name}
           </p>
           <p>
-            <strong>Kamera:</strong> {data.camera.full_name}
+            <strong>Camera:</strong> {data.camera.full_name}
           </p>
           <p>
-            <strong>Datum:</strong> {data.earth_date}
+            <strong>Date:</strong> {data.earth_date}
           </p>
         </>
       )}
 
       {type === "neo" && data && (
         <>
-          <h1>{data.name}</h1>
+          <h1 className="page-title">
+            {" "}
+            NEO Tracker
+            <br />
+            {data.name}
+          </h1>
           <p>
-            <strong>Promjer:</strong>{" "}
+            <strong>Radius:</strong>{" "}
             {data.estimated_diameter.kilometers.estimated_diameter_max} km
           </p>
           <p>
-            <strong>Datum bliskog prolaska:</strong>{" "}
+            <strong>Date of close planetary passage:</strong>{" "}
             {data.close_approach_data[0].close_approach_date}
           </p>
           <p>
-            <strong>Brzina:</strong>{" "}
+            <strong>Speed:</strong>{" "}
             {data.close_approach_data[0].relative_velocity.kilometers_per_hour}{" "}
             km/h
           </p>
