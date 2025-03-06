@@ -1,5 +1,6 @@
 .earth-page {
   max-width: 100%;
+  min-height: 100vh;
   margin: 0 auto;
   font-family: monospace;
   text-align: center;

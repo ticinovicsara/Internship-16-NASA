@@ -27,8 +27,8 @@
   z-index: 100;
 }
 
-button:hover {
-  background-color: #503976;
+.button:hover {
+  background-color: #412c64;
 }
 
 @font-face {

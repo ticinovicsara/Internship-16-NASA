@@ -1,39 +1,39 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { APOD } from "../types/apod";
 import { useLoading } from "../contexts/LoadingContext";
+import { fetchApodData } from "../services/fetchApodData";
 
 const useFetchAPOD = (count: number) => {
   const [data, setData] = useState<APOD[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { loading, setLoading } = useLoading();
 
-  const fetchData = useCallback(async () => {
-    if (!loading) {
-      setLoading(true);
-    }
-
-    try {
-      const response = await fetch(
-        `https://api.nasa.gov/planetary/apod?api_key=${
-          import.meta.env.VITE_NASA_API_KEY
-        }&count=${count}`
-      );
-      const result = await response.json();
-      const validResult = Array.isArray(result) ? result : [result];
-
-      setData((prevData) => [...prevData, ...validResult]);
-    } catch (err) {
-      setError("Greška pri dohvaćanju podataka.");
-    } finally {
-      setLoading(false);
-    }
-  }, [count, loading, setLoading]);
-
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    let isMounted = true;
+    setLoading(true);
 
-  return { data, error };
+    const fetchData = fetchApodData(count);
+
+    fetchData()
+      .then((response) => {
+        if (isMounted) {
+          setData(response);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (isMounted) {
+          setError(err.message || "Greška pri dohvaćanju podataka.");
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [count, setLoading]);
+
+  return { data, loading, error };
 };
 
 export default useFetchAPOD;

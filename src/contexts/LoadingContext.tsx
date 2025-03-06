@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 
 interface LoadingContextType {
   loading: boolean;
@@ -15,14 +15,4 @@ export const useLoading = () => {
   return context;
 };
 
-export const LoadingProvider: React.FC = ({ children }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-
-  console.log("LoadingContext state changed:", loading); // Dodaj log za promene stanja
-
-  return (
-    <LoadingContext.Provider value={{ loading, setLoading }}>
-      {children}
-    </LoadingContext.Provider>
-  );
-};
+export default LoadingContext;

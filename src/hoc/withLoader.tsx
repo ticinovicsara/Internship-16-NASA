@@ -1,28 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLoading } from "../contexts/LoadingContext";
+import Loader from "../components/Loader";
 
-const withLoader = <P extends object>(
-  WrappedComponent: React.ComponentType<P>
-) => {
-  return (props: P) => {
-    const { loading, setLoading } = useLoading();
-    const [isLoading, setIsLoading] = useState<boolean>(loading);
+type FetchDataFunction<T> = (...args: any[]) => Promise<T>;
+
+export function withLoader<T, P extends { loadingData: T }>(
+  WrappedComponent: React.ComponentType<P>,
+  fetchData: FetchDataFunction<T>
+) {
+  return function WithLoadingComponent(props: Omit<P, "loadingData">) {
+    const { setLoading } = useLoading();
+    const [data, setData] = useState<T | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-      // Stabilizuj loading stanje da se ne menja prečesto
-      if (loading !== isLoading) {
-        setIsLoading(loading);
-      }
-    }, [loading, isLoading]);
+      const loadData = async () => {
+        setIsLoading(true);
+        setLoading(true);
 
-    console.log("WithLoader loading:", isLoading);
+        try {
+          const result = await fetchData(...(props as any));
+          setData(result);
+        } catch (err) {
+          setError("Failed to load data.");
+        } finally {
+          setIsLoading(false);
+          setLoading(false);
+        }
+      };
+
+      loadData();
+    }, [fetchData, setLoading, props]);
 
     if (isLoading) {
-      return <div className="loader"></div>;
+      return <Loader></Loader>;
     }
 
-    return <WrappedComponent {...props} />;
+    return <WrappedComponent {...(props as P)} loadingData={data as T} />;
   };
-};
-
-export default withLoader;
+}

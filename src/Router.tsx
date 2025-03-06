@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Layout } from "./components";
 import { HomePage, NotFoundPage } from "./pages";
 import MarsRoverPage from "./pages/MarsRoverPage";
-import ApodPage from "./pages/ApodPage";
+import { ApodPage } from "./pages";
 import PhotoDetails from "./components/PhotoDetails";
 import NEOTrackerPage from "./pages/NEOTrackerPage";
 import EarthImageryPage from "./pages/EarthImageryPage";
@@ -14,7 +14,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="apod" element={<ApodPage loading={false} />} />
+          <Route path="apod" element={<ApodPage />} />
           <Route path="mars" element={<MarsRoverPage />} />
           <Route path="neo" element={<NEOTrackerPage />} />
           <Route path="earth" element={<EarthImageryPage />} />

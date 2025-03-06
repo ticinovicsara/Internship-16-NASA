@@ -1,4 +1,4 @@
-import { LoadingProvider } from "./contexts/LoadingContext";
+import { LoadingProvider } from "./providers/LoadingProvider";
 import ThemeProvider from "./contexts/ThemeContext";
 import AppRouter from "./Router";
 
