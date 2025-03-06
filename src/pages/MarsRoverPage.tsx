@@ -1,32 +1,32 @@
 import { useState } from "react";
-import useFetchMars from "../hooks/useFetchMars";
 import { Link } from "react-router-dom";
 import "../styles/mars/mars.css";
 import { MarsPhoto } from "../types/mars";
 import { fetchMarsData } from "../services/fetchMarsData";
 import { withLoader } from "../hoc/withLoader";
 
-const MarsRover: React.FC<{ loadingData: MarsPhoto[] }> = ({ loadingData }) => {
-  <div style={{ display: "flex", flexWrap: "wrap" }}>
-    {loadingData.map((photo) => (
-      <Link key={photo.id} to={`/photo/${photo.id}`}>
-        <img src={photo.img_src} alt="Mars" width="200" height="200" />
-      </Link>
-    ))}
-  </div>;
+const MarsRoverGallery: React.FC<{ loadingData: MarsPhoto[] }> = ({
+  loadingData,
+}) => {
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
+      {loadingData.map((photo) => (
+        <Link key={photo.id} to={`/photo/${photo.id}`}>
+          <img src={photo.img_src} alt="Mars" width="200" height="200" />
+        </Link>
+      ))}
+    </div>
+  );
 };
 
-const MarsRoverWithLoading = withLoader<
-  MarsPhoto[],
-  { loadingData: MarsPhoto[] }
->(MarsRover, fetchMarsData);
+const MarsRoverWithLoading = withLoader(MarsRoverGallery, fetchMarsData);
 
 const MarsRoverPage: React.FC = () => {
   const [rover, setRover] = useState<string>("curiosity");
   const [camera, setCamera] = useState<string>("");
   const [page, setPage] = useState<number>(1);
 
-  const { data, loading, error } = useFetchMars(rover, camera, page);
+  const params = { rover, camera, page };
 
   return (
     <div className="mars-rover-page">
@@ -49,8 +49,7 @@ const MarsRoverPage: React.FC = () => {
         </select>
       </div>
 
-      {loading && <p>Učitavanje...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <MarsRoverWithLoading params={params} />
 
       <div className="pagination">
         <button

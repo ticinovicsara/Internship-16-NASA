@@ -7,13 +7,12 @@ const MarsPhotos = () => {
   const [camera, setCamera] = useState("");
   const [page, setPage] = useState(1);
 
-  const { data, loading, error } = useFetchMars(rover, camera, page);
+  const { data, loading, error } = useFetchMars({ rover, camera, page });
 
   return (
     <div>
       <h1>Mars Rover Photos</h1>
 
-      {/* Filtriranje */}
       <div>
         <label>Rover: </label>
         <select value={rover} onChange={(e) => setRover(e.target.value)}>
@@ -31,7 +30,6 @@ const MarsPhotos = () => {
         </select>
       </div>
 
-      {/* Prikaz slika */}
       {loading && <p>Učitavanje...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -43,7 +41,6 @@ const MarsPhotos = () => {
         ))}
       </div>
 
-      {/* Paginacija */}
       <div>
         <button disabled={page === 1} onClick={() => setPage(page - 1)}>
           Prethodna

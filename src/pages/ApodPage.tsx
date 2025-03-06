@@ -21,17 +21,19 @@ const ApodGallery: React.FC<{ loadingData: APOD[] }> = ({ loadingData }) => {
   );
 };
 
-const ApodGalleryWithLoading = withLoader<APOD[], { loadingData: APOD[] }>(
-  ApodGallery,
-  fetchApodData(20)
-);
+const ApodGalleryWithLoading = withLoader<
+  APOD[],
+  { params: { count: number } }
+>(ApodGallery, fetchApodData(20));
 
 export const ApodPage: React.FC = () => {
+  const params = { count: 20 };
+
   return (
     <Fragment>
       <div className="apod-page">
         <h1 className="page-title">APOD - Astronomy Picture of the Day</h1>
-        <ApodGalleryWithLoading />
+        <ApodGalleryWithLoading params={params} />
       </div>
     </Fragment>
   );

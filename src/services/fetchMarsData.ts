@@ -1,10 +1,15 @@
-export const fetchMarsData = async (
-  rover: string,
-  camera: string,
-  page: number
-) => {
-  const API_KEY = import.meta.env.VITE_NASA_API_KEY;
-  let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=${page}&api_key=${API_KEY}`;
+export const fetchMarsData = async ({
+  rover,
+  camera,
+  page,
+}: {
+  rover: string;
+  camera: string;
+  page: number;
+}) => {
+  let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=${page}&api_key=${
+    import.meta.env.VITE_NASA_API_KEY
+  }`;
 
   if (camera) url += `&camera=${camera}`;
 

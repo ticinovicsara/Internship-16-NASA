@@ -4,11 +4,11 @@ import Loader from "../components/Loader";
 
 type FetchDataFunction<T> = (...args: any[]) => Promise<T>;
 
-export function withLoader<T, P extends { loadingData: T }>(
-  WrappedComponent: React.ComponentType<P>,
+export function withLoader<T, P extends { params: any; loadingData?: T }>(
+  WrappedComponent: React.ComponentType<P & { loadingData: T }>,
   fetchData: FetchDataFunction<T>
 ) {
-  return function WithLoadingComponent(props: Omit<P, "loadingData">) {
+  return function WithLoadingComponent(props: P) {
     const { setLoading } = useLoading();
     const [data, setData] = useState<T | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -20,7 +20,7 @@ export function withLoader<T, P extends { loadingData: T }>(
         setLoading(true);
 
         try {
-          const result = await fetchData(...(props as any));
+          const result = await fetchData(props.params);
           setData(result);
         } catch (err) {
           setError("Failed to load data.");
@@ -31,12 +31,16 @@ export function withLoader<T, P extends { loadingData: T }>(
       };
 
       loadData();
-    }, [fetchData, setLoading, props]);
+    }, [fetchData, setLoading, props.params]);
 
     if (isLoading) {
-      return <Loader></Loader>;
+      return <Loader />;
     }
 
-    return <WrappedComponent {...(props as P)} loadingData={data as T} />;
+    if (error) {
+      return <div>{error}</div>;
+    }
+
+    return <WrappedComponent {...props} loadingData={data as T} />;
   };
 }
