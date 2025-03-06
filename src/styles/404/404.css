@@ -1,0 +1,22 @@
+.not-found-page {
+  max-width: 1200px;
+  height: auto;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: monospace;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-image {
+  margin-top: 40px;
+  width: 50%;
+}
+
+.not-found-btn {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}

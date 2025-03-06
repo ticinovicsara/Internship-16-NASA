@@ -12,7 +12,10 @@ interface SavedLocation {
 
 const EarthImageryWithLoading = withLoader(
   EarthImageryGallery,
-  useFetchEarthImage
+  async ({ lat, lon }: { lat: number; lon: number }) => {
+    const result = await useFetchEarthImage(lat, lon);
+    return result.image;
+  }
 );
 
 const EarthImageryPage = () => {
@@ -50,13 +53,7 @@ const EarthImageryPage = () => {
       {lat !== null && lon !== null && (
         <EarthImageryWithLoading
           params={{ lat, lon }}
-          loadingData={null}
-          additionalProps={{
-            lat,
-            lon,
-            saveLocation,
-            favorites,
-          }}
+          {...{ lat, lon, saveLocation, favorites }} // Prosljeđivanje dodatnih props-a
         />
       )}
     </div>
