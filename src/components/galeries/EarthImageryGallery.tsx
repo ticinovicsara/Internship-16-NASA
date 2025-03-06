@@ -9,9 +9,6 @@ const EarthImageryGallery: React.FC<{
 }> = ({ loadingData, lat, lon, saveLocation, favorites }) => {
   return (
     <div className="earth-page">
-      <h1 className="page-title">Earth Imagery</h1>
-      <p className="earth-paragraph">Odaberite lokaciju klikom na mapu</p>
-
       {loadingData && (
         <div className="earth-image">
           <h1 className="satelite-title">NASA Satelitska Slika</h1>

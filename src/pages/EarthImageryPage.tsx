@@ -1,22 +1,44 @@
 import { useState, useEffect } from "react";
 import LeafletMap from "../components/LeafletMap";
-import useFetchEarthImage from "../hooks/useFetchEarthImagery";
-import { withLoader } from "../hoc/withLoader";
 import EarthImageryGallery from "../components/galeries/EarthImageryGallery";
 import "../styles/earth/earth.css";
+import { withLoader } from "../hoc/withLoader";
+import { fetchEarthData } from "../services/fetchEarthData";
 
 interface SavedLocation {
   lat: number;
   lon: number;
 }
 
-const EarthImageryWithLoading = withLoader(
-  EarthImageryGallery,
-  async ({ lat, lon }: { lat: number; lon: number }) => {
-    const result = await useFetchEarthImage(lat, lon);
-    return result.image;
-  }
+const EarthImageryGalleryWithLoading = withLoader(
+  (props) => (
+    <EarthImageryGallery
+      lat={null}
+      lon={null}
+      saveLocation={function (): void {
+        throw new Error("Function not implemented.");
+      }}
+      favorites={[]}
+      {...props}
+    />
+  ),
+  async ({ lat, lon }: { lat: number; lon: number }) => fetchEarthData(lat, lon)
 );
+
+const EarthImageryWithLoading = ({
+  lat,
+  lon,
+  saveLocation,
+  favorites,
+}: any) => {
+  return (
+    <EarthImageryGalleryWithLoading
+      params={{ lat, lon }}
+      saveLocation={saveLocation}
+      favorites={favorites}
+    />
+  );
+};
 
 const EarthImageryPage = () => {
   const [lat, setLat] = useState<number | null>(null);
@@ -41,21 +63,25 @@ const EarthImageryPage = () => {
   return (
     <div className="earth-page">
       <h1 className="page-title">Earth Imagery</h1>
-      <p className="earth-paragraph">Odaberite lokaciju klikom na mapu</p>
+      <p className="earth-paragraph">Pick a location on the map</p>
 
-      <LeafletMap
-        onLocationSelect={(latitude, longitude) => {
-          setLat(latitude);
-          setLon(longitude);
-        }}
-      />
-
-      {lat !== null && lon !== null && (
-        <EarthImageryWithLoading
-          params={{ lat, lon }}
-          {...{ lat, lon, saveLocation, favorites }} // Prosljeđivanje dodatnih props-a
+      <div className="map">
+        <LeafletMap
+          onLocationSelect={(latitude, longitude) => {
+            setLat(latitude);
+            setLon(longitude);
+          }}
         />
-      )}
+
+        {lat !== null && lon !== null && (
+          <EarthImageryWithLoading
+            lat={lat}
+            lon={lon}
+            saveLocation={saveLocation}
+            favorites={favorites}
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ interface EarthImage {
   date: string;
 }
 
-export const fetchEarthImage = async (
+export const fetchEarthData = async (
   lat: number,
   lon: number
 ): Promise<EarthImage> => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchEarthImage } from "../services/fetchEarthData";
+import { fetchEarthData } from "../services/fetchEarthData";
 
 interface EarthImage {
   url: string;
@@ -18,7 +18,7 @@ const useFetchEarthImagery = (lat: number | null, lon: number | null) => {
       setLoading(true);
       setError(null);
       try {
-        const result = await fetchEarthImage(lat, lon);
+        const result = await fetchEarthData(lat, lon);
         setImage(result);
       } catch (err: any) {
         setError(err.message || "Greška pri dohvatanju slike.");
