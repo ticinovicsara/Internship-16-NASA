@@ -17,9 +17,9 @@ const DetailPage = () => {
 
         switch (type) {
           case "apod":
-            url = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`;
+            url = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&date=${id}`;
             break;
-          case "mars-rover":
+          case "mars":
             url = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${API_KEY}`;
             break;
           case "neo":
@@ -34,7 +34,7 @@ const DetailPage = () => {
           throw new Error("Greška prilikom dohvaćanja podataka.");
         const result = await response.json();
 
-        if (type === "mars-rover") {
+        if (type === "mars") {
           const foundPhoto = result.photos.find(
             (p: any) => p.id === Number(id)
           );
@@ -62,11 +62,14 @@ const DetailPage = () => {
         <>
           <h1 className="page-title">{data.title}</h1>
           <img src={data.url} alt={data.title} width="100%" />
-          <p>{data.explanation}</p>
+          <p>Details: {data.explanation}</p>
+          <p>
+            <strong>Date:</strong> {data.date}
+          </p>
         </>
       )}
 
-      {type === "mars-rover" && data && (
+      {type === "mars" && data && (
         <>
           <h1 className="page-title">Mars Rover Image</h1>
           <img src={data.img_src} alt="Mars" width="100%" />
@@ -84,18 +87,13 @@ const DetailPage = () => {
 
       {type === "neo" && data && (
         <>
-          <h1 className="page-title">
-            {" "}
-            NEO Tracker
-            <br />
-            {data.name}
-          </h1>
+          <h1 className="page-title">NEO Tracker - {data.name}</h1>
           <p>
             <strong>Radius:</strong>{" "}
             {data.estimated_diameter.kilometers.estimated_diameter_max} km
           </p>
           <p>
-            <strong>Date of close planetary passage:</strong>{" "}
+            <strong>Close Approach Date:</strong>{" "}
             {data.close_approach_data[0].close_approach_date}
           </p>
           <p>
