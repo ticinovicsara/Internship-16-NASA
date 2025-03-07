@@ -1,5 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from "react";
-import { ErrorFallback } from "./errorFallback";
+import { ErrorFallback } from "./errorFallback"; // import error fallback komponente
 
 interface ErrorBoundaryState {
   hasError: boolean;

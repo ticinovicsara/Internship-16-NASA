@@ -22,8 +22,11 @@ export const HomePage = () => {
       <div className="homepage">
         <h1 className="title">Welcome to the NASA Explorer</h1>
         <p className="description">
-          Explore images, data, and information from NASA's missions, rovers,
-          and space observatories.
+          Explore images, data and information from NASA missions, rovers and
+          space observatories.
+          <br />
+          Discover the wonders of space, follow rovers on Mars, or investigate
+          near-Earth asteroid threats.
         </p>
 
         <div className="theme-image-container">

@@ -5,22 +5,22 @@ export const Cards = () => {
     <div className="card-container">
       <Card
         title="Astronomy Picture of the Day (APOD)"
-        description="View the gallery of APOD images from the last 20 days, with date filtering and infinite scrolling."
+        description="Expect daily images of space with detailed descriptions. Explore fascinating images with the latest insights from NASA missions!"
         link="/apod"
       />
       <Card
         title="Mars Rover Photos"
-        description="Explore the latest Mars rover photos, filter by rover and camera, and navigate through paginated results."
+        description="Check out the latest images from Mars! Here you can explore images taken by our rover cameras on the Red Planet."
         link="/mars"
       />
       <Card
         title="NEO Tracker"
-        description="Track Near-Earth Objects (NEOs), visualize data with charts, and explore the latest objects close to Earth."
+        description="Track near-Earth asteroids and comets. Get informed about potential threats and their trajectories!"
         link="/neo"
       />
       <Card
         title="Earth Imagery"
-        description="Interact with satellite imagery of Earth, select locations, and store favorites in localStorage."
+        description="Explore our planet through satellite images. Find pictures of any location on Earth and discover new views of our planet!"
         link="/earth"
       />
     </div>

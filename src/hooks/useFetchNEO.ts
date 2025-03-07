@@ -15,8 +15,11 @@ const useFetchNEO = (startDate: string, endDate: string) => {
       try {
         const result = await fetchNEOData({ startDate, endDate });
         setData(result);
+        console.log("NEO Data fetched:", result);
       } catch (err: any) {
-        setError(handleApiError(err));
+        const errorMessage = handleApiError(err);
+        setError(errorMessage);
+        console.error("Error fetching NEO data:");
       } finally {
         setLoading(false);
       }

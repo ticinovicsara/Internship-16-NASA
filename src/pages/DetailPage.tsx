@@ -2,12 +2,15 @@ import { Loader } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/details/details.css";
+import "../styles/error.css";
 import ErrorBoundary from "../utils/ErrorBoundary";
+import { ErrorFallback } from "../utils/errorFallback";
 
 const DetailPage = () => {
   const { type, id } = useParams();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,25 +29,24 @@ const DetailPage = () => {
             url = `https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=${API_KEY}`;
             break;
           default:
-            throw new Error("Nepoznat tip podataka.");
+            throw new Error("Unknown datatype.");
         }
 
         const response = await fetch(url);
-        if (!response.ok)
-          throw new Error("Greška prilikom dohvaćanja podataka.");
+        if (!response.ok) throw new Error("Data fetch failed.");
         const result = await response.json();
 
         if (type === "mars") {
           const foundPhoto = result.photos.find(
             (p: any) => p.id === Number(id)
           );
-          if (!foundPhoto) throw new Error("Slika nije pronađena.");
+          if (!foundPhoto) throw new Error("Image not found.");
           setData(foundPhoto);
         } else {
           setData(result);
         }
       } catch (err: any) {
-        throw new Error(err.message || "Greška prilikom dohvata podataka.");
+        setError(err.message || "Data fetch failed.");
       } finally {
         setLoading(false);
       }
@@ -54,6 +56,15 @@ const DetailPage = () => {
   }, [type, id]);
 
   if (loading) return <Loader />;
+
+  if (error) {
+    return (
+      <ErrorFallback
+        error={{ name: "Error", message: error }}
+        resetErrorBoundary={() => setError(null)}
+      />
+    );
+  }
 
   return (
     <div className="details-page">

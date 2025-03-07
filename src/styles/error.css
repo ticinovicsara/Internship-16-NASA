@@ -1,20 +1,45 @@
+.error-fallback-container {
+  min-height: 100vh;
+  text-align: center;
+  align-content: center;
+  padding: 30px;
+  background-color: transparent;
+  color: #6a1b9a;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error-header {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #6a1b9a;
+  margin-bottom: 10px;
+}
+
 .error-message {
-  color: red;
-  font-size: 18px;
-  background-color: #f8d7da;
-  padding: 15px;
-  border-radius: 5px;
+  font-size: 1.2rem;
+  margin: 15px 0;
+  color: #9c27b0;
 }
 
-.error-message button {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
+.retry-button {
+  background-color: #6a1b9a;
+  color: #fff;
+  padding: 12px 24px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  margin-top: 15px;
+  transition: all 0.3s ease;
 }
 
-.error-message button:hover {
-  background-color: #0056b3;
+.retry-button:hover {
+  background-color: #9c27b0;
+  color: #fff;
+}
+
+.retry-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(106, 27, 154, 0.5);
 }
