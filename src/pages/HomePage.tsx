@@ -10,12 +10,14 @@ export const HomePage = () => {
 
   if (!themeContext) {
     console.error(
-      "ThemeContext nije dostupan u HomePage. Proveri da li je ThemeProvider ispravno postavljen."
+      "ThemeContext is not available in HomePage. Make sure ThemeProvider is correctly wrapped."
     );
-    return <p>Greška: Tema nije učitana.</p>;
+    return <p>Error: Theme not loaded.</p>;
   }
 
   const { isDarkMode } = themeContext;
+
+  document.body.className = isDarkMode ? "dark-theme" : "light-theme";
 
   return (
     <>

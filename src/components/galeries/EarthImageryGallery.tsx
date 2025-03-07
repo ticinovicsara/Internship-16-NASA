@@ -32,7 +32,7 @@ const EarthImageryGallery: React.FC<{
 
       {favorites.length > 0 && (
         <div className="earth-fav-locations">
-          <h2>Favourite locations</h2>
+          <h2>Favorite locations</h2>
           <ul className="earth-fav-list">
             {favorites.map((fav, index) => (
               <li key={index} className="earth-fav-item">

@@ -1,3 +1,29 @@
+.light-theme {
+  --text-color: #000000;
+
+  --card-background-color: #6f26c975;
+  --card-text-color: white;
+  --card-link-color: #751fff;
+
+  --apod-item-background-color: #e9e9e9;
+
+  --details-background-color: #7e62c0bc;
+  --details-text-background-color: #4b445393;
+}
+
+.dark-theme {
+  --text-color: #ffffff;
+
+  --card-background-color: #2a1f5a;
+  --card-text-color: #f0f0f0;
+  --card-link-color: #c6a2e4;
+
+  --apod-item-background-color: #4b4453;
+
+  --details-background-color: #5c4989;
+  --details-text-background-color: #4b4453;
+}
+
 * {
   margin: 0;
   padding: 0;

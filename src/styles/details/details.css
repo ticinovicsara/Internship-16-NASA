@@ -11,13 +11,13 @@
 .details-page img {
   width: 50%;
   margin-bottom: 50px;
-  background-color: #5c4989;
+  background-color: var(--details-background-color);
   padding: 15px;
   border-radius: 20px;
 }
 
 .details-page p {
-  background-color: #4b4453;
+  background-color: var(--details-text-background-color);
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 20px;

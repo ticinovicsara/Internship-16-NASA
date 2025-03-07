@@ -39,7 +39,7 @@
 }
 
 .earth-fav-item {
-  background-color: #4b4453;
+  background-color: var(--details-background-color);
   margin: 5px 0;
   padding: 10px;
   border-radius: 5px;
