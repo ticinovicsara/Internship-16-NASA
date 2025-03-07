@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Layout } from "./components";
-import { HomePage, NotFoundPage } from "./pages";
+import { HomePage, NotFoundPage } from "./pages/index.ts";
 import MarsRoverPage from "./pages/MarsRoverPage";
 import { ApodPage } from "./pages";
 import NEOTrackerPage from "./pages/NEOTrackerPage";

@@ -2,12 +2,12 @@ import { Loader } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/details/details.css";
+import ErrorBoundary from "../utils/ErrorBoundary";
 
 const DetailPage = () => {
   const { type, id } = useParams();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +44,7 @@ const DetailPage = () => {
           setData(result);
         }
       } catch (err: any) {
-        setError(err.message || "Greška.");
+        throw new Error(err.message || "Greška prilikom dohvata podataka.");
       } finally {
         setLoading(false);
       }
@@ -54,55 +54,59 @@ const DetailPage = () => {
   }, [type, id]);
 
   if (loading) return <Loader />;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div className="details-page">
-      {type === "apod" && data && (
-        <>
-          <h1 className="page-title">{data.title}</h1>
-          <img src={data.url} alt={data.title} width="100%" />
-          <p>Details: {data.explanation}</p>
-          <p>
-            <strong>Date:</strong> {data.date}
-          </p>
-        </>
-      )}
+      <ErrorBoundary>
+        {type === "apod" && data && (
+          <>
+            <h1 className="page-title">{data.title}</h1>
+            <img src={data.url} alt={data.title} width="100%" />
+            <p>Details: {data.explanation}</p>
+            <p>
+              <strong>Date:</strong> {data.date}
+            </p>
+          </>
+        )}
 
-      {type === "mars" && data && (
-        <>
-          <h1 className="page-title">Mars Rover Image</h1>
-          <img src={data.img_src} alt="Mars" width="100%" />
-          <p>
-            <strong>Rover:</strong> {data.rover.name}
-          </p>
-          <p>
-            <strong>Camera:</strong> {data.camera.full_name}
-          </p>
-          <p>
-            <strong>Date:</strong> {data.earth_date}
-          </p>
-        </>
-      )}
+        {type === "mars" && data && (
+          <>
+            <h1 className="page-title">Mars Rover Image</h1>
+            <img src={data.img_src} alt="Mars" width="100%" />
+            <p>
+              <strong>Rover:</strong> {data.rover.name}
+            </p>
+            <p>
+              <strong>Camera:</strong> {data.camera.full_name}
+            </p>
+            <p>
+              <strong>Date:</strong> {data.earth_date}
+            </p>
+          </>
+        )}
 
-      {type === "neo" && data && (
-        <>
-          <h1 className="page-title">NEO Tracker - {data.name}</h1>
-          <p>
-            <strong>Radius:</strong>{" "}
-            {data.estimated_diameter.kilometers.estimated_diameter_max} km
-          </p>
-          <p>
-            <strong>Close Approach Date:</strong>{" "}
-            {data.close_approach_data[0].close_approach_date}
-          </p>
-          <p>
-            <strong>Speed:</strong>{" "}
-            {data.close_approach_data[0].relative_velocity.kilometers_per_hour}{" "}
-            km/h
-          </p>
-        </>
-      )}
+        {type === "neo" && data && (
+          <>
+            <h1 className="page-title">NEO Tracker - {data.name}</h1>
+            <p>
+              <strong>Radius:</strong>{" "}
+              {data.estimated_diameter.kilometers.estimated_diameter_max} km
+            </p>
+            <p>
+              <strong>Close Approach Date:</strong>{" "}
+              {data.close_approach_data[0].close_approach_date}
+            </p>
+            <p>
+              <strong>Speed:</strong>{" "}
+              {
+                data.close_approach_data[0].relative_velocity
+                  .kilometers_per_hour
+              }{" "}
+              km/h
+            </p>
+          </>
+        )}
+      </ErrorBoundary>
     </div>
   );
 };

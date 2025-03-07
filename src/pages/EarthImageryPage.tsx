@@ -15,9 +15,7 @@ const EarthImageryGalleryWithLoading = withLoader(
     <EarthImageryGallery
       lat={null}
       lon={null}
-      saveLocation={function (): void {
-        throw new Error("Function not implemented.");
-      }}
+      saveLocation={() => {}}
       favorites={[]}
       {...props}
     />

@@ -17,6 +17,7 @@
     "react-dom": "^19.0.0",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.2.0",
+    "react-toastify": "^11.0.5",
     "recharts": "^2.15.1",
     "sass": "^1.85.1",
     "three": "^0.174.0"

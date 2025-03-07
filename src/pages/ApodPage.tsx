@@ -5,6 +5,7 @@ import { fetchApodData } from "../services/fetchApodData";
 import "../styles/apod/apod.css";
 import ApodGallery from "../components/galeries/ApodGallery";
 import Loader from "../components/Loader";
+import ErrorBoundary from "../utils/ErrorBoundary";
 
 const INITIAL_COUNT = 20;
 const LOAD_MORE_COUNT = 20;
@@ -45,7 +46,7 @@ export const ApodPage: React.FC = () => {
           document.body.offsetHeight - 200 &&
         !loading
       ) {
-        setCount((prev) => prev + LOAD_MORE_COUNT); // Trigger loading more images on scroll
+        setCount((prev) => prev + LOAD_MORE_COUNT);
       }
     };
 
@@ -58,9 +59,15 @@ export const ApodPage: React.FC = () => {
       <div className="apod-page">
         <h1 className="page-title">APOD - Astronomy Picture of the Day</h1>
 
-        <ApodGalleryWithLoading params={{ count }} />
+        <ErrorBoundary>
+          <ApodGalleryWithLoading params={{ count }} />
+        </ErrorBoundary>
 
-        {images.length > 0 && <ApodGallery loadingData={images} />}
+        {images.length > 0 && (
+          <ErrorBoundary>
+            <ApodGallery loadingData={images} />
+          </ErrorBoundary>
+        )}
 
         {loading && <Loader />}
       </div>

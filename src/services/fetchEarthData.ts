@@ -1,19 +1,12 @@
-interface EarthImage {
-  url: string;
-  date: string;
-}
+import { EarthImage } from "../types/earth";
+import { fetchData } from "../services/apiHelper";
 
 export const fetchEarthData = async (
   lat: number,
   lon: number
 ): Promise<EarthImage> => {
   const API_KEY = import.meta.env.VITE_NASA_API_KEY;
-  const response = await fetch(
-    `https://api.nasa.gov/planetary/earth/assets?lat=${lat}&lon=${lon}&dim=0.1&api_key=${API_KEY}`
-  );
+  const url = `https://api.nasa.gov/planetary/earth/assets?lat=${lat}&lon=${lon}&dim=0.1&api_key=${API_KEY}`;
 
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
-
-  const data = await response.json();
-  return { url: data.url, date: data.date };
+  return fetchData<EarthImage>(url);
 };

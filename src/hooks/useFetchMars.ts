@@ -21,9 +21,19 @@ const useFetchMars = ({
       setError(null);
       try {
         const photos = await fetchMarsData({ rover, camera, page });
-        setData(photos);
+        if (photos.length === 0) {
+          setError("No Mars photos found for the given parameters.");
+        } else {
+          setData(photos);
+        }
       } catch (err: any) {
-        setError(err.message || "Greška pri dohvatanju podataka.");
+        if (err.message.includes("API error")) {
+          setError("API error occurred while fetching Mars photos.");
+        } else if (err.message.includes("NetworkError")) {
+          setError("Network error. Please check your connection.");
+        } else {
+          setError(err.message || "An unknown error occurred.");
+        }
       } finally {
         setLoading(false);
       }

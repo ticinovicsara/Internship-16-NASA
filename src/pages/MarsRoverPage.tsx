@@ -3,6 +3,7 @@ import "../styles/mars/mars.css";
 import { fetchMarsData } from "../services/fetchMarsData";
 import { withLoader } from "../hoc/withLoader";
 import { MarsRoverGallery } from "../components/galeries/MarsRoverGallery";
+import ErrorBoundary from "../utils/ErrorBoundary";
 
 const MarsRoverWithLoading = withLoader(MarsRoverGallery, fetchMarsData);
 
@@ -34,7 +35,9 @@ const MarsRoverPage: React.FC = () => {
         </select>
       </div>
 
-      <MarsRoverWithLoading params={params} />
+      <ErrorBoundary>
+        <MarsRoverWithLoading params={params} />
+      </ErrorBoundary>
 
       <div className="pagination">
         <button

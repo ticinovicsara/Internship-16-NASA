@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ToastNotification from "../ToastNotification";
 
 const EarthImageryGallery: React.FC<{
   loadingData: any;
@@ -7,30 +8,31 @@ const EarthImageryGallery: React.FC<{
   saveLocation: () => void;
   favorites: { lat: number; lon: number }[];
 }> = ({ loadingData, lat, lon, saveLocation, favorites }) => {
+  const handleSaveLocation = () => {
+    saveLocation();
+    ToastNotification("Location saved successfully!");
+  };
+
   return (
     <div className="earth-page">
       {loadingData && (
         <div className="earth-image">
-          <h1 className="satelite-title">NASA Satelitska Slika</h1>
+          <h1 className="satelite-title">NASA Satelite Image</h1>
           <Link to={`/details/earth/${loadingData.date}?lat=${lat}&lon=${lon}`}>
-            <img
-              src={loadingData.url}
-              alt="Satelitska slika"
-              className="satelite-image"
-            />
+            <img src={loadingData.url} className="satelite-image" />
           </Link>
           <p className="earth-paragraph">
-            <strong>Datum snimanja:</strong> {loadingData.date}
+            <strong>Date of recording:</strong> {loadingData.date}
           </p>
-          <button className="button" onClick={saveLocation}>
-            Spremi lokaciju
+          <button className="button" onClick={handleSaveLocation}>
+            Save location
           </button>
         </div>
       )}
 
       {favorites.length > 0 && (
         <div className="earth-fav-locations">
-          <h2>Omiljene Lokacije</h2>
+          <h2>Favourite locations</h2>
           <ul className="earth-fav-list">
             {favorites.map((fav, index) => (
               <li key={index} className="earth-fav-item">

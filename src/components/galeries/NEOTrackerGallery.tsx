@@ -14,7 +14,7 @@ export const NEOTrackerGallery: React.FC<{ loadingData: any[] }> = ({
 }) => {
   return (
     <div className="neo-tracker-page">
-      <h2>Lista NEO objekata</h2>
+      <h2>List of NEO objects</h2>
       <ul className="neo-list">
         {loadingData.map((neo) => (
           <li key={neo.id}>
@@ -29,7 +29,7 @@ export const NEOTrackerGallery: React.FC<{ loadingData: any[] }> = ({
         ))}
       </ul>
 
-      <h2>Grafikon: Maksimalni prečnik objekata</h2>
+      <h2>Chart: Maximum diameter of objects</h2>
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
