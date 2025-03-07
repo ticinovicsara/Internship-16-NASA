@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { APOD } from "../types/apod";
 import { useLoading } from "../contexts/LoadingContext";
 import { fetchApodData } from "../services/fetchApodData";
+import { handleApiError } from "./apiHookHelper";
 
 const useFetchAPOD = (count: number) => {
   const [data, setData] = useState<APOD[]>([]);
@@ -27,15 +28,7 @@ const useFetchAPOD = (count: number) => {
       })
       .catch((err) => {
         if (isMounted) {
-          if (err.message.includes("Failed to fetch data")) {
-            setError("There was an issue fetching data from the API.");
-          } else if (err.message.includes("NetworkError")) {
-            setError(
-              "Network error occurred. Please check your internet connection."
-            );
-          } else {
-            setError(err.message || "An unknown error occurred.");
-          }
+          setError(handleApiError(err));
           setLoading(false);
         }
       });

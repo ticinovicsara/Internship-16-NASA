@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchNEOData } from "../services/fetchNEOData";
 import { NEO } from "../types/neo";
+import { handleApiError } from "./apiHookHelper";
 
 const useFetchNEO = (startDate: string, endDate: string) => {
   const [data, setData] = useState<NEO[]>([]);
@@ -15,7 +16,7 @@ const useFetchNEO = (startDate: string, endDate: string) => {
         const result = await fetchNEOData({ startDate, endDate });
         setData(result);
       } catch (err: any) {
-        setError(err.message || "Failed to load data");
+        setError(handleApiError(err));
       } finally {
         setLoading(false);
       }

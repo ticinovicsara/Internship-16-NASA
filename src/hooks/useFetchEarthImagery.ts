@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchEarthData } from "../services/fetchEarthData";
+import { handleApiError } from "./apiHookHelper";
 
 interface EarthImage {
   url: string;
@@ -21,7 +22,7 @@ const useFetchEarthImagery = (lat: number | null, lon: number | null) => {
         const result = await fetchEarthData(lat, lon);
         setImage(result);
       } catch (err: any) {
-        setError(err.message || "Greška pri dohvatanju slike.");
+        setError(handleApiError(err));
       } finally {
         setLoading(false);
       }

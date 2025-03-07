@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { MarsPhoto } from "../types/mars";
 import { fetchMarsData } from "../services/fetchMarsData";
+import { handleApiError } from "./apiHookHelper";
 
 const useFetchMars = ({
   rover,
@@ -19,6 +20,7 @@ const useFetchMars = ({
     const fetchData = async () => {
       setLoading(true);
       setError(null);
+
       try {
         const photos = await fetchMarsData({ rover, camera, page });
         if (photos.length === 0) {
@@ -27,13 +29,7 @@ const useFetchMars = ({
           setData(photos);
         }
       } catch (err: any) {
-        if (err.message.includes("API error")) {
-          setError("API error occurred while fetching Mars photos.");
-        } else if (err.message.includes("NetworkError")) {
-          setError("Network error. Please check your connection.");
-        } else {
-          setError(err.message || "An unknown error occurred.");
-        }
+        setError(handleApiError(err));
       } finally {
         setLoading(false);
       }
